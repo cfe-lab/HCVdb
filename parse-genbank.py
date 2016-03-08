@@ -62,7 +62,7 @@ for i, record in enumerate(gb):
         print i
 
     desc = record.description
-    if 'Patent' in desc or desc.startswith('Modified'):
+    if 'Patent' in desc or desc.startswith('Modified') or 'IRNA' in desc.upper() or 'UTR' in desc.split():
         # ignore records associated with a patent
         continue
 
