@@ -1,5 +1,22 @@
 import HyPhy
 import os
+import re
+
+gap_prefix = re.compile('^[-]+')
+gap_suffix = re.compile('[-]+$')
+
+def get_boundaries (str):
+    # return a tuple giving indices of subsequence without gap prefix and suffix
+    res = [0,len(str)]
+    left = gap_prefix.findall(str)
+    right = gap_suffix.findall(str)
+    if left:
+        res[0] = len(left[0])
+    if right:
+        res[1] = len(str) - len(right[0])
+
+    return res
+
 
 nuc_alphabet = 'ACGT'
 nuc_score_matrix = '{{5,-4,-4,-4},{-4,5,-4,-4},{-4,-4,5,-4},{-4,-4,-4,5}}'

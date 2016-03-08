@@ -7,25 +7,6 @@ from csv import DictWriter
 
 hygo = HyGo.HyGo()
 
-import re
-
-gap_prefix = re.compile('^[-]+')
-gap_suffix = re.compile('[-]+$')
-
-
-def get_boundaries (str):
-    # return a tuple giving indices of subsequence without gap prefix and suffix
-    res = [0,len(str)]
-    left = gap_prefix.findall(str)
-    right = gap_suffix.findall(str)
-    if left:
-        res[0] = len(left[0])
-    if right:
-        res[1] = len(str) - len(right[0])
-
-    return res
-
-
 
 parser = argparse.ArgumentParser(
     description='Read records from GenBank file.  Align sequences against HXB2 gene reference '
@@ -81,7 +62,7 @@ for i, record in enumerate(gb):
         aquery = results['query']
         ascore = results['score']
 
-        left, right = get_boundaries(aref)
+        left, right = HyGo.get_boundaries(aref)
 
         # diagnostics
         overlap = sum(map(lambda i: aquery[i]!='-' and aref[i]!='-', range(left, right)))
